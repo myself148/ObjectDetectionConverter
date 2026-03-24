@@ -1,0 +1,27 @@
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境 (防止把包全传上去)
+venv/
+env/
+.env
+
+# IDE 配置文件
+.idea/
+.vscode/
+
+# 本地测试数据与输出 (防止上传庞大的图片和标注)
+datasets/
+output/
+*.zip
+
+# 忽略临时测试图片
+*.jpg
+*.png
+*.jpeg
+*.xml
+*.txt
+*.json
+!requirements.txt
