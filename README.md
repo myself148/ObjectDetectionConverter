@@ -55,3 +55,76 @@ python main.py
 输出根目录：你想保存转换后数据集的位置。
 
 #### 3、开始转换：点击“开始批量转换”，下方的终端面板会实时显示处理进度和日志。
+
+## 标注格式示例
+
+为了确保转换顺利，请检查你的源数据是否符合以下标准格式：
+
+### 1. Pascal VOC (XML)
+每个图片对应一个同名的 `.xml` 文件，包含图像的绝对宽高以及目标的绝对像素坐标 `[xmin, ymin, xmax, ymax]`。
+```xml
+<annotation>
+  <folder>images</folder>
+  <filename>image_001.jpg</filename>
+  <size>
+    <width>800</width>
+    <height>600</height>
+    <depth>3</depth>
+  </size>
+  <object>
+    <name>dog</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>150</xmin>
+      <ymin>200</ymin>
+      <xmax>450</xmax>
+      <ymax>500</ymax>
+    </bndbox>
+  </object>
+</annotation>
+```
+
+### 2. YOLO (TXT)
+每个图片对应一个同名的 .txt 文件。每一行代表一个目标，格式为 class_id x_center y_center width height。坐标和宽高必须是 0~1 之间的归一化数值。
+(注意：作为源格式读取时，同目录下必须包含 classes.txt 文件用于映射 ID 到类别名称。)
+
+```yolo
+0 0.375000 0.583333 0.375000 0.500000
+1 0.750000 0.416667 0.200000 0.333333
+```
+
+### 3. COCO (JSON)
+整个数据集的所有图片和标注集中在一个单一的 .json 文件中。边界框格式为绝对像素下的 [x_min, y_min, width, height]。
+
+```JSON
+{
+    "images": [
+        {
+            "id": 1,
+            "file_name": "image_001.jpg",
+            "width": 800,
+            "height": 600
+        }
+    ],
+    "annotations": [
+        {
+            "id": 1,
+            "image_id": 1,
+            "category_id": 1,
+            "bbox": [150.0, 200.0, 300.0, 300.0],
+            "area": 90000.0,
+            "iscrowd": 0,
+            "segmentation": []
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "dog",
+            "supercategory": "none"
+        }
+    ]
+}
+```
